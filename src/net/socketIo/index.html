@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .content{
+            border:1px solid #999;
+            min-height: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <button id="connectBtn">连接</button>
+        <input type="text" placeholder="输入消息"><button id="send">发送</button>
+        <div class="content"></div>
+    </div>
+    <script type="module">
+        import { io } from "./socketio.js";
+
+        var socket = io('http://localhost:8000', {
+            autoConnect: false,
+        });
+        const connectBtn = document.getElementById('connectBtn')
+        connectBtn.onclick = connect
+        function connect() {
+            socket.connect()
+        }
+        const sender=document.getElementById('send')
+        sender.onclick=send;
+        function send() {
+            socket.emit('getUserInfo','1')
+        }
+        socket.on('data',eventObj=>{
+            document.querySelector('.content').innerHTML=`
+                <h3>${eventObj.eventName}</h3>
+                <div>
+                    ${eventObj.data.name}--${eventObj.data.age}    
+                </div>
+            `
+        })
+    </script>
+</body>
+
+</html>
