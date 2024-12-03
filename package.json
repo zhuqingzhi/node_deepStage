@@ -11,6 +11,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "node-xlsx": "^0.24.0"
+    "cors": "^2.8.5",
+    "node-xlsx": "^0.24.0",
+    "socket.io": "^4.8.1"
   }
 }
